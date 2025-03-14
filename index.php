@@ -1,8 +1,4 @@
 <?php
-
-$users = [[$login => "ivan", $name => "Иван"], $password => "12345"];
-[[$login => "petr", $name => "Петр"], $password => "54321"];
-
 session_start();
 if (isset($_SESSION["users"])) {
   header("Location:dashboard.php");
@@ -14,8 +10,14 @@ if ($_SESSION['REQUEST_METHOD'] = 'POST') {
   $password = htmlentities($_POST['password']);
 }
 
-foreach ($users as $user) {
-  if ($user === $login && $user === $password) {
+$usersArray =
+  [
+    [$login => "ivan", $name => "Иван", $password => "12345"],
+    [$login => "petr", $name => "Петр", $password => "54321"],
+  ];
+
+foreach ($usersArray as $user) {
+  if ($user['login'] = $login && $user['password'] = $password) {
 
     $_SESSION['users'] = 1;
     $_SESSION['login'] = $login;
@@ -55,3 +57,6 @@ foreach ($users as $user) {
 
     </form>
   </main>
+</body>
+
+</html>

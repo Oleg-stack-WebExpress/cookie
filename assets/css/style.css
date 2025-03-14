@@ -4,13 +4,19 @@
     color: black;
     padding: 25px 25px;
     display: none;
+    position: fixed;
+    right: 475px;
+    bottom: 0px;
+    z-index: 3;
 }
 
-.cook {
-    font-size: 20px;
-    background: #a5b2eb;
-    color: black;
-    padding: 25px 25px;
+.cookieDEl {
+    font-size: 14px;
+    color: rgb(23, 0, 106);
+    padding: 5px 5px;
     border: 2px;
-    display: none;
+    position: fixed;
+    right: 75px;
+    bottom: 5px;
+    z-index: 3;
 }

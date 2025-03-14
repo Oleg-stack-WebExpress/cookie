@@ -11,18 +11,11 @@ document.addEventListener("DOMContentLoaded",
                 ads.style.display = 'none'
             })
         }
-
-        var isCook = getCookie('cook')
-        if (!isCook) {
-            var cook = document.getElementsByClassName('cook')[0]
-            cook.style.display = 'block'
-
-            cook.addEventListener('click', function () {
-                setCookie('ads', null, null)
-                cook.style.display = 'none'
+        var isCookieDEl = getCookie('cookieDEl')
+        if (!isCookieDEl) {
+            var cookieDEl = document.getElementsByClassName('cookieDEl')[0]
+            cookieDEl.addEventListener('click', function () {
+                deleteCookie('ads')
             })
         }
-
-
-    }
-);
+    })
