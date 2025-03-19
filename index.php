@@ -1,62 +1,51 @@
+<?php require_once('templates/header.php') ?>
+
 <?php
-session_start();
-if (isset($_SESSION["users"])) {
-  header("Location:dashboard.php");
+
+$db = mysqli_connect('127.0.0.1', 'root', '', 'mysite'); //подготовка базы данных из phpmyadmin
+
+if (!$db) {
+  echo 'Ошибка при работе с БД!';
   exit();
 }
 
-if ($_SESSION['REQUEST_METHOD'] = 'POST') {
-  $login = htmlentities($_POST['login']);
-  $password = htmlentities($_POST['password']);
+$types = $_GET['types'] ?? 0;
+$genre = $_GET['genre'] ?? 0;
+$age = $_GET['age'] ?? 0;
+
+
+$sql = 'SELECT * FROM ' . $types;
+$sqlfilms = 'SELECT * FROM films WHERE genre = ' . $genre;
+$sqlserials = 'SELECT * FROM serials WHERE genre = ' . $genre;
+
+$result = mysqli_query($db, $sql, $sqltable, $sqlserials);
+$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+foreach ($rows as $row) {
+  echo 'Название: ' . $row['name'] . '. Жанр: ' . $row['genre'] . '. Год выхода: ' . $row['year'] . '. Возрастной рейтинг: ' . $row['age'] . '</br>';
 }
 
-$usersArray =
-  [
-    [$login => "ivan", $name => "Иван", $password => "12345"],
-    [$login => "petr", $name => "Петр", $password => "54321"],
-  ];
-
-foreach ($usersArray as $user) {
-  if ($user['login'] = $login && $user['password'] = $password) {
-
-    $_SESSION['users'] = 1;
-    $_SESSION['login'] = $login;
-    $error = "";
-    header("Location:dashboard.php");
-    exit();
-  } else {
-    $error = "Неверный логин или пароль";
-  }
-}
 ?>
 
+<form action="/" method="get">
+  <label for="types">Выберите тип просмотра:</label>
+  <select class="types" name="types">
+    <option value="films">Фильмы</option>
+    <option value="serials">Сериалы</option>
+  </select>
+  <select class="genre" name="genre">
+    <option value="fantasy">Фантастика</option>
+    <option value="comedy">Комедия</option>
+  </select>
+  <select class="age" name="age">
+    <option value="0">0+</option>
+    <option value="12">12+</option>
+    <option value="16">16+</option>
+    <option value="18">18+</option>
+  </select>
+  <button type="submit">Показать результат</button>
+</form>
 
-<?php require_once('templates/header.php') ?>
 
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
 
-  <main class="form-signin w-20 m-auto">
-    <form action="/" method="post">
-
-      <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
-
-      <?php if (isset($error)): ?>
-        <p style="color:red;"><?php echo $error; ?></p>
-      <?php endif; ?>
-
-      <div class="form-floating">
-        <input type="text" name="login" class="form-control" id="login" placeholder="name@example.com" required>
-        <label for="login">Логин</label>
-      </div>
-      <div class="form-floating">
-        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-        <label for="password">Пароль</label>
-      </div>
-
-      <button class="btn btn-primary w-20 py-2" type="submit">Войти</button>
-
-    </form>
-  </main>
-</body>
-
-</html>
+<?php require_once('templates/footer.php') ?>
